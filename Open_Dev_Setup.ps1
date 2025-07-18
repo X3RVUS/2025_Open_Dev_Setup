@@ -1,5 +1,5 @@
-﻿# ========================================================================
-# ENTWICKLUNGS-SETUP STARTEN (CHROME, VS CODE, FIREFOX)
+# ========================================================================
+# ENTWICKLUNGS-SETUP STARTEN (CHROME, VS CODE, SPOTIFY)
 # by XERUS | Version 4
 # WICHTIG: Dieses Skript muss als Administrator ausgeführt werden!
 # ========================================================================
@@ -57,8 +57,8 @@ Start-Process "chrome.exe" -ArgumentList @("--new-window", $githubUrl, $geminiUr
 # VS Code starten
 if (Test-Path $vsCodePath) { Start-Process $vsCodePath } else { Write-Warning "VS Code Pfad nicht gefunden: $vsCodePath" }
 
-# Firefox starten
-Start-Process "firefox.exe" "--new-window"
+# Spotify starten
+Start-Process "spotify.exe" "--new-window"
 
 
 # --- 2. Fenster finden (mit der Warte-Funktion) ---
@@ -66,11 +66,11 @@ Write-Host "`nWarte auf das Laden der Fenster..." -ForegroundColor Cyan
 # Chrome wird nach dem zuletzt geöffneten Tab benannt sein
 $chromeWindow = Wait-For-Window -WindowTitle "Chrome" 
 $vsCodeWindow = Wait-For-Window -WindowTitle "Visual Studio Code"
-$firefoxWindow = Wait-For-Window -WindowTitle "Mozilla Firefox"
+$spotifyWindow = Wait-For-Window -WindowTitle "Spotify"
 
 
 # --- 3. Fenster anordnen ---
-if ($chromeWindow -and $vsCodeWindow -and $firefoxWindow) {
+if ($chromeWindow -and $vsCodeWindow -and $spotifyWindow) {
     Write-Host "`nOrdne Fenster an..." -ForegroundColor Cyan
 
     $screen = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
@@ -86,7 +86,7 @@ if ($chromeWindow -and $vsCodeWindow -and $firefoxWindow) {
     $windowsToPosition = @(
         @{ Proc = $chromeWindow;  X = 0;         W = $W1; Title = "Chrome" },
         @{ Proc = $vsCodeWindow;  X = $W1;       W = $W2; Title = "VS Code" },
-        @{ Proc = $firefoxWindow; X = $W1 + $W2; W = $W3; Title = "Firefox" }
+        @{ Proc = $spotifyWindow; X = $W1 + $W2; W = $W3; Title = "Spotify" }
     )
 
     foreach ($win in $windowsToPosition) {

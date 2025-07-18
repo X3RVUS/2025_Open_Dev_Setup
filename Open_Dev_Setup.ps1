@@ -1,5 +1,5 @@
-# ========================================================================
-# ENTWICKLUNGS-SETUP STARTEN (CHROME, VS CODE, SPOTIFY)
+﻿# ========================================================================
+# ENTWICKLUNGS-SETUP STARTEN (CHROME, VS CODE, FIREFOX)
 # by XERUS | Version 4
 # WICHTIG: Dieses Skript muss als Administrator ausgeführt werden!
 # ========================================================================
@@ -57,7 +57,7 @@ Start-Process "chrome.exe" -ArgumentList @("--new-window", $githubUrl, $geminiUr
 # VS Code starten
 if (Test-Path $vsCodePath) { Start-Process $vsCodePath } else { Write-Warning "VS Code Pfad nicht gefunden: $vsCodePath" }
 
-# Spotify starten
+# Firefox starten
 Start-Process "spotify.exe" "--new-window"
 
 
@@ -66,16 +66,16 @@ Write-Host "`nWarte auf das Laden der Fenster..." -ForegroundColor Cyan
 # Chrome wird nach dem zuletzt geöffneten Tab benannt sein
 $chromeWindow = Wait-For-Window -WindowTitle "Chrome" 
 $vsCodeWindow = Wait-For-Window -WindowTitle "Visual Studio Code"
-$spotifyWindow = Wait-For-Window -WindowTitle "Spotify"
+$firefoxWindow = Wait-For-Window -WindowTitle "Spotify"
 
 
 # --- 3. Fenster anordnen ---
-if ($chromeWindow -and $vsCodeWindow -and $spotifyWindow) {
+if ($chromeWindow -and $vsCodeWindow -and $firefoxWindow) {
     Write-Host "`nOrdne Fenster an..." -ForegroundColor Cyan
 
     $screen = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds
     $W = $screen.Width
-    $H = $screen.Height
+    $H = $screen.Height - 50
     
     # Aufteilung: Links (25%), Mitte (50%), Rechts (25%)
     $W1 = [int]($W * 0.25)
@@ -86,7 +86,7 @@ if ($chromeWindow -and $vsCodeWindow -and $spotifyWindow) {
     $windowsToPosition = @(
         @{ Proc = $chromeWindow;  X = 0;         W = $W1; Title = "Chrome" },
         @{ Proc = $vsCodeWindow;  X = $W1;       W = $W2; Title = "VS Code" },
-        @{ Proc = $spotifyWindow; X = $W1 + $W2; W = $W3; Title = "Spotify" }
+        @{ Proc = $firefoxWindow; X = $W1 + $W2; W = $W3; Title = "Firefox" }
     )
 
     foreach ($win in $windowsToPosition) {
